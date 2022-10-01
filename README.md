@@ -23,7 +23,7 @@ The code has refered to [pytorch-NetVlad](https://github.com/Nanne/pytorch-NetVl
 
 The training code is under __training__ folder and the small demo is under __demo__ folder
 
-To run the training code, you should also put *pittsburgh* dataset and the *initdata* for initialization of the conv layer for the netvlad pooling layer. These two files can be retrieved from [here](https://www.di.ens.fr/willow/research/netvlad/) under additional data and downloads from the paper's website.
+To run the training code, you should also put *pittsburgh* dataset and the *initdata* for initialization of the conv layer for the netvlad pooling layer. These two files can be retrieved from [here](https://www.di.ens.fr/willow/research/netvlad/) under additional data and downloads from the paper's website or [here](https://data.ciirc.cvut.cz/public/projects/2015netVLAD/Pittsburgh250k/) for the dataset.
 
 To run the demo, cd to the demo file and run command `python app.py`. This would run the flask application for the website. Then go to `localhost:5000` on your browser, you should be able to see an image like this
 <img width="1434" alt="截屏2022-10-01 16 59 34" src="https://user-images.githubusercontent.com/92624596/193401785-331876d5-3a59-4d85-824f-fd11c53fc68a.png">
