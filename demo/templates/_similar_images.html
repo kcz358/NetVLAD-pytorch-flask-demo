@@ -1,0 +1,34 @@
+{% macro similar_images(prev_image, images) %}
+<div class='row mt-4' id="image-prev-zone">
+    <h3 class="p-2 bg-fer">Image Preview</h3>
+    <div class="d-flex justify-content-center mt-4">
+            <img src="data:;base64, {{ prev_image }}" class="mt-4 rounded img-thumbnail" />
+    </div>
+</div>
+<div class='row mt-4' id="info-zone">
+    <h3 class="p-2 bg-fer">Detailed Information</h3>
+    <div class="d-flex justify-content-center mt-4">
+        <div class="col-md-8">
+            {% if images %}
+            {%   for image in images %}
+            <div class="card mb-3 shadow" style="max-width: 768px;">
+                <div class="row g-0">
+                  <div class="col-md-8">
+                    <img src="static/database/{{ image['name'] }}" class="img-fluid rounded-start" alt="...">
+                  </div>
+                  <div class="col-md-4">
+                    <div class="card-body">
+                      <h5 class="card-title">{{ image['name']}}</h5>
+                      <p class="card-text">Top {{ image['index'] }} matching in database</p>
+                      <p class="card-text"><small class="text-muted">Vector Distance: {{ image['distance'] }}</small></p>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            {%   endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endmacro %}

@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="bg-white container">
+    <form id="image_form" action="/inference_sync">
+        <div class="pt-4 mb-3 d-flex justify-content-center">
+            <div class="col-auto m-3">
+                <input class="form-control" type="file" id="formFile" name="formFile">
+            </div>
+            <div class="col-auto m-3">
+                <button type="submit" form="image_form" value="Submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </form>
+    
+    <div id="info"></div>
+</div>
+<script>
+    $(function(){
+        $("#image_form input:file").change(function(){
+            $("#info").empty();
+            //$("#image_form").submit();
+        });
+    });
+
+    $(document).ready(function(){
+        $("#image_form").on("submit", function(e){
+            e.preventDefault();
+            var form_data = new FormData($("#image_form")[0])
+            $.ajax({
+                type:'POST',
+                url:'/inference_sync',
+                data:form_data,
+                cache:false,
+                processData:false,
+                contentType:false,
+                dataType:false,
+                success: function(data){
+                    $("#info").html(data);
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}
