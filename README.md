@@ -1,4 +1,4 @@
-# NetVLAD-pytorch-with-demo-
+# NetVLAD-pytorch-with-demo
 NetVLAD training, testing code and a small demo for the model.
 
 The model training procedure is based on [NetVLAD: CNN architecture for weakly supervised place recognition](https://arxiv.org/abs/1511.07247).<br> 
