@@ -4,6 +4,12 @@ NetVLAD training, testing code and a small demo for the model.
 The model training procedure is based on [NetVLAD: CNN architecture for weakly supervised place recognition](https://arxiv.org/abs/1511.07247).<br> 
 The code has refered to [pytorch-NetVlad](https://github.com/Nanne/pytorch-NetVlad/tree/8f7c37ba7a79a499dd0430ce3d3d5df40ea80581)
 
+## Updates
+Pretrained GhostNetVLAD checkpoints is available at `demo/resources/netvlad_ghost.pth.tar`
+
+The testing results on Tokyo247 dataset is:
+
+
 ## Packages dependencies
 >training and testing:
 - pytorch 
