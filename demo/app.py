@@ -9,9 +9,10 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torchvision import models
 import torchvision.transforms as transforms
-import netvlad
+import netvlad_ghost_norm
 from base64 import b64encode
 from sklearn.neighbors import NearestNeighbors
+import glob
 
 #L2 Norm layer for after cnn base
 class L2Norm(nn.Module):
@@ -46,8 +47,8 @@ def inference_sync():
         img = Image.open(in_memory_file)
         img_transform = transform(img)
         img_transform = img_transform.unsqueeze(0)
-        query = model.encode(img_transform)
-        query = model.netvlad_pool(query)
+        query = model.features(img_transform)
+        query, _ = model.pool(query)
         #We want the best 3 matching in the database
         k = 3
         D, I = knn.kneighbors(query.detach().numpy(), k)
@@ -60,7 +61,21 @@ def inference_sync():
         
         return html
     return "<h3>No results</h3>"
-        
+
+def encode_databse(file_name):
+    print("Offline encoding for the images in database")
+    encode_db = h5py.File("./resources/encode_db.h5", "w")
+    db = torch.zeros(len(file_name), 32768)
+    
+    for i in range(len(file_name)):
+        img = Image.open(file_name[i])
+        img_transform = transform(img)
+        img_transform = img_transform.unsqueeze(0)
+        query = model.features(img_transform)
+        query, _ = model.pool(query)
+        db[i:i+1, :] = query.detach()
+    encode_db.create_dataset("database", data = db)
+    encode_db.close()
         
         
 
@@ -76,19 +91,23 @@ if __name__ == '__main__':
     layers.append(L2Norm())
     encoder = nn.Sequential(*layers)
     model = nn.Module()
-    model.add_module("encode", encoder)
+    model.add_module("features", encoder)
 
-    netvlad_layer = netvlad.NetVLAD(num_clusters=64, dim=512,vladv2=True)
-    model.add_module("netvlad_pool", netvlad_layer)
-    model.encode = nn.DataParallel(model.encode)
-    model.netvlad_pool = nn.DataParallel(model.netvlad_pool)
+    netvlad_layer = netvlad_ghost_norm.NetVlad_Ghost(num_clusters=64, dim=512, vladv2=False, normalize_input=True, num_ghost_clusters=6)
+    model.add_module("pool", netvlad_layer)
+    model.features = nn.DataParallel(model.features)
+    model.pool = nn.DataParallel(model.pool)
     transform = input_transform()
-    checkpoints = torch.load("resources/epoch_6", map_location=torch.device('cpu'))
-    model.load_state_dict(checkpoints["model_state_dict"])
-    with open("resources/file_name.txt", "r") as f:
+    checkpoints = torch.load("resources/netvlad_ghost.pth.tar", map_location=torch.device('cpu'))
+    model.load_state_dict(checkpoints["state_dict"])
+    file_name = glob.glob("./static/database/*.jpeg")
+    '''with open("resources/file_name.txt", "r") as f:
         file_name = f.read()
         file_name = file_name.split("\n")
-        f.close()
+        f.close()'''
+    if not os.path.exists("./resources/encode_db.h5"):
+        encode_databse(file_name)
+    
     database = h5py.File("resources/encode_db.h5","r")['database']
     knn = NearestNeighbors(n_jobs=-1)
     knn.fit(database)
