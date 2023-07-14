@@ -2,7 +2,7 @@
 NetVLAD training, testing code and a small demo for the model.
 
 The model training procedure is based on [NetVLAD: CNN architecture for weakly supervised place recognition](https://arxiv.org/abs/1511.07247).<br> 
-The code has refered to [pytorch-NetVlad](https://github.com/Nanne/pytorch-NetVlad/tree/8f7c37ba7a79a499dd0430ce3d3d5df40ea80581)
+The code has refered to [pytorch-NetVlad](https://github.com/Nanne/pytorch-NetVlad/tree/8f7c37ba7a79a499dd0430ce3d3d5df40ea80581) , [MixVPR: Feature Mixing for Visual Place Recognition](https://github.com/amaralibey/MixVPR) , [GSV-cities](https://github.com/amaralibey/gsv-cities)
 
 ## Updates
 Pretrained GhostNetVLAD checkpoints is available at `demo/resources/netvlad_ghost.pth.tar`
