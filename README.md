@@ -14,7 +14,7 @@ The testing results on Tokyo247 dataset is:
 | 32768 | 82.2 | 92.6 | 93.6|
 | 4096 | 89.2 | 93.6 | 94.6 |
 
-Note : I randomly sampled 20000 features to perform PCA-whitening. Thus, the test results in 4096 dim may vary if you do PCA by yourself.
+Note : I randomly sampled 20000 features to perform PCA-whitening. Thus, the test results in 4096 dim may be different if you do PCA by yourself.
 
 
 ## Packages dependencies
