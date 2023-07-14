@@ -12,6 +12,9 @@ The code has refered to [pytorch-NetVlad](https://github.com/Nanne/pytorch-NetVl
 - faiss
 - scipy
 - numpy
+- tensorboardX
+- pytorch_metric_learning
+- h5py
 
 (Additional packages if you want to see the demo)
 
